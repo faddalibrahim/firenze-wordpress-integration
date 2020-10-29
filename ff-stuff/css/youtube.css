@@ -1,0 +1,135 @@
+.demo-page-container {
+  width:100%;
+  max-width: 100%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.demo-page-container h3 {
+  font-size:38px;
+  margin-top:0;
+  margin-bottom:15px;
+}
+
+.demo-page-container p {
+  font-size:18px;
+}
+
+.demo-page-container h5 {
+  font-size:26px;
+  margin-bottom:15px;
+  margin-top:20px;
+  padding-top:15px;
+  text-transform:uppercase;
+  border-top:1px solid #eee;
+}
+
+.youtube-link, .youtube-link-dark {
+  cursor:pointer;
+  margin-bottom:0px;
+  display:inline-block;
+  font-size:16px;
+  color:#fdffe4;
+  text-decoration:none;
+}
+
+.grtyoutube-popup {
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	z-index:99999;
+}
+
+.grtyoutube-popup-content {
+	margin-top:0px;
+	
+	max-width:100%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+	height:100%;
+}
+
+.grtyoutube-popup-close {
+	position:absolute;
+	top:40px;
+	right:0;
+	color:#FFF;
+	font-size:25px;
+	width:17px;
+	height:17px;
+	cursor:pointer;
+	margin-right:30px;
+}
+
+.grtyoutube-iframe {
+	width:100%;
+	height:100%;
+
+}
+@media (max-width:767px) {
+	.grtyoutube-iframe {
+		width:100%;
+		height:100%;
+	}
+}
+
+.grtyoutube-dark-theme{
+	background: rgba(0,0,0, 0.85);
+}
+
+.grtyoutube-dark-theme .grtyoutube-popup-content {
+	-webkit-box-shadow: 0px 0px 8px 0px rgba(255,255,255,0.4);
+	-moz-box-shadow: 0px 0px 8px 0px rgba(255,255,255,0.4);
+	box-shadow: 0px 0px 8px 0px rgba(255,255,255,0.4);
+}
+
+.grtyoutube-dark-theme .grtyoutube-popup-close {
+ background-color: #fff;
+    border: medium none;
+    border-radius: 50%;
+    height: 35px;
+    position: absolute;
+    right: 50px;
+    top: 30px;
+    width: 35px;
+    z-index: 198;
+	background-image: url('close.png');
+	background-size: cover;
+
+}
+
+.grtyoutube-light-theme {
+	background: rgba(255,255,255, 0.85);
+}
+
+.grtyoutube-light-theme .grtyoutube-popup-content {
+	-webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.4);
+	-moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.4);
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.4);
+}
+
+.grtyoutube-light-theme .grtyoutube-popup-close {
+background-color: #fff;
+    border: medium none;
+    border-radius: 50%;
+    height: 40px;
+    position: absolute;
+    right: 50px;
+    top: 30px;
+    width: 40px;
+    z-index: 198;
+ background-image: url('modules/mod_video/close.png');
+ background-size: cover;
+
+}
+
+
+.html5-main-video {
+height: 683px !important;
+width:1210px !important;
+left:0px;
+top:0px;
+}
