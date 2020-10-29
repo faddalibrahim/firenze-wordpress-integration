@@ -17,6 +17,23 @@
 
 <?php 
 
+	$months = array('Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec');
+
+	function getMonth($date){
+		global $months;
+
+		$publish_month = intval(explode("-",$date,3)[1]);
+
+		return $months[$publish_month - 1];
+	}
+
+	function getDay($date){
+		$publish_date_with_time = explode("-",$date,3)[2];
+		$publish_day = explode(" ", $publish_date_with_time)[0];
+
+		return $publish_day;
+	}
+
 	
 	/*write query for all images*/
 	$sql_posts = "SELECT * FROM wp_posts WHERE post_type = 'post' ORDER BY id DESC";
@@ -37,7 +54,21 @@
 	/*close connection to database*/
 	// mysqli_close($conn);
 
-	// "<p style='color: black !important; position: absolute; z-index: 999'>".print_r($posts[0])."</p>";
+
+ ?>
+
+<!-- grabbing that respective attachmens of each blog post -->
+
+ <?php 
+ 	$id = 12;
+
+ 	function getPostAttachments($arr){
+ 		global $id;
+ 		return $arr['post_parent'] == $id;
+ 	}
+
+ 	$post_attachments = array_filter($attachments,"getPostAttachments");
+
 
  ?>
 
@@ -74,7 +105,7 @@
  	<p style="color: red">
  		<?php 
 
- 			print_r($posts[0])
+ 			print_r($post_attachments);
  		 ?>
  	</p>
 
@@ -166,13 +197,14 @@
 	 									<div class="blog_post event_area">
 	 										<div class="blogitem single_event">
 	 											<figure>
-	 												<img src="ff-stuff/img/banner/firenze_libri.jpg" alt="">
+	 												<!-- <img src="ff-stuff/img/banner/firenze_libri.jpg" alt=""> -->
+	 												<img src="<?php echo htmlspecialchars($post_attachments[1]['guid'])?>" alt="">
 	 												featured image goes here
 	 											</figure>
 	 											<a href="#" class="blog_item_date">
-	 												<h3>22</h3>
-	 												<h4>Feb</h4>
-	 												<p><?php echo $post['post_date']?></p>
+	 												<h3><?php echo getDay($post['post_date']) ?></h3>
+	 												<!-- <h4>Feb</h4> -->
+	 												<h4><?php echo getMonth($post['post_date']) ?></h4>
 	 											</a>
 	 										</div>
 	 										<div class="blog_details">
