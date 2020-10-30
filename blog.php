@@ -226,7 +226,7 @@
 	 											</a>
 	 										</div>
 	 										<div class="blog_details">
-	 											<a href="blog19.html">
+	 											<a href="blogtest.php?id=<?php echo htmlspecialchars($post['ID'])?>">
 	 												<h2 style="text-transform: uppercase;">
 	 													<?php echo htmlspecialchars($post['post_title']) ?>
 	 												</h2>
