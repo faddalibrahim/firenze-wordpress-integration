@@ -42,7 +42,7 @@
 		/*writing query for a single item*/
 		$sql = "SELECT * FROM wp_posts WHERE id = $id";
 
-		$sql_attachments = "SELECT * FROM wp_posts WHERE post_parent = $id";
+		$sql_attachments = "SELECT * FROM wp_posts WHERE post_parent = $id AND post_mime_type LIKE '%image%'";
 
 		/*getting query reults*/
 		$result = mysqli_query($conn, $sql);
@@ -52,12 +52,14 @@
 		$post = mysqli_fetch_assoc($result);
 		$attachments = mysqli_fetch_all($result_attachments, MYSQLI_ASSOC);
 
+
 		/*freeing results from memory*/
 		mysqli_free_result($result);
 
 		/*close connection to database*/
 		mysqli_close($conn);
-
+	}else{
+		header('location: blog.php');
 	}
 
 
@@ -198,8 +200,6 @@
 		 																$featured_image = $attachment['guid'];
 		 															}
 			 													}
-
-
 			 												 ?>
 
 

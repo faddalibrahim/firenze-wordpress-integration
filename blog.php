@@ -216,7 +216,6 @@
 
 	 												<!-- <img src="ff-stuff/img/banner/firenze_libri.jpg" alt=""> -->
 	 												<img src="<?php echo htmlspecialchars($featured_image)?>" alt="">
-	 												featured image goes here
 	 											</figure>
 	 											<a href="#" class="blog_item_date">
 	 												<h3><?php echo getDay($post['post_date']) ?></h3>
