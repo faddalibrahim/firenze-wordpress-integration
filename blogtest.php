@@ -17,25 +17,47 @@
 <?php
 
 
+	$months = array('Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec');
+
+	function getMonth($date){
+		global $months;
+
+		$publish_month = intval(explode("-",$date,3)[1]);
+
+		return $months[$publish_month - 1];
+	}
+
+	function getDay($date){
+		$publish_date_with_time = explode("-",$date,3)[2];
+
+		$publish_day = explode(" ", $publish_date_with_time)[0];
+
+		return $publish_day;
+	}
+
+
 	if(isset($_GET['id'])){
 		$id = mysqli_real_escape_string($conn, $_GET['id']);
 
 		/*writing query for a single item*/
 		$sql = "SELECT * FROM wp_posts WHERE id = $id";
 
+		$sql_attachments = "SELECT * FROM wp_posts WHERE post_parent = $id";
+
 		/*getting query reults*/
 		$result = mysqli_query($conn, $sql);
+		$result_attachments = mysqli_query($conn, $sql_attachments);
 
 		/*fetching results in array format*/
 		$post = mysqli_fetch_assoc($result);
+		$attachments = mysqli_fetch_all($result_attachments, MYSQLI_ASSOC);
 
 		/*freeing results from memory*/
-		// mysqli_free_result($result);
+		mysqli_free_result($result);
 
 		/*close connection to database*/
-		// mysqli_close($conn);
+		mysqli_close($conn);
 
-		// print_r($image);
 	}
 
 
@@ -157,79 +179,56 @@
 		<section class="blog_area">
 				<div class="container">
 						<div class="row">
-							<?php if($post): ?>
-								<div style="color: black" class="col-lg-9">
-									<?php echo $post['post_content'] ?>
-								</div>
-							<?php else: ?>
-								<div>
-									No such blog post exists
-								</div>
-							<?php endif?>
-							<!-- <div class="col-lg-9">
+							<div class="col-lg-9">
 									<div class="blog_left_sidebar">
-											<article class="row blog_item">
-												<div class="col-md-12">
-													<div class="blog_post event_area">
-														<div class="blogitem single_event">
-															<figure>
-																<img src="ff-stuff/img/banner/Melvina_Conton-Sierra_Leone.jpg" alt="">
-															</figure>
-															<a href="#" class="blog_item_date">
-																<h3>18</h3>
-																<h4>June</h4>
-															</a>
-														</div>
-														
-														<div class="blog_details norad">
-																<h2>
-																		CREATING CHANGE WITH GEMS IN FREETOWN, SIERRA LEONE.
-																</h2>														
-															<div style="width:20%;height:4px;background: url(	ff-stuff/img/banner/Line.svg);background-size:cover;"></div><br>																													
-															<p>Melvina Conton | Firenze Country Ambassador - Sierra Leone </p>
-															<div class="quotes">A proud citizen of Freetown, Sierra Leone and a Mechanical Engineering major at Ashesi University in Ghana, Melvina N’yillah Conton is a promising young African striving for social impact in her continent. Like her country, Melvina is ‘a little jewel’ thriving in diversity. She exhibits strong patriotism and possesses contagious zeal, and this is what propels her to achieve greatness. Melvina enjoys reading novels and plays the baritone horn in an all-female marching band.</div>
-																<br>
-															<p>
-																She is the Sierra Leonean Firenze Country Ambassador and founder of Girls in Engineering, Mathematics and Science (GEMS) Club, an initiative encompassing interactive learning in STEM amongst young females in Freetown, Sierra Leone. Melvina is a woman in STEM who actively fights against the rote-learning nature of Africa’s educational system and vouches for active participation in education while eradicating the stereotypes that marginalize females in education.
-															</p>
-															<img src="	ff-stuff/img/blog/b1.jpg" alt="">
-															<br><br>
-															<h3>Tell us about GEMS ?</h3>
-															<div style="width:10%;height:4px;background: url(	ff-stuff/img/banner/Line.svg);background-size:cover;"></div><br>																													
-															<p>
-																The GEMS Club is an all-girls science club which I founded to give young girls the opportunity to engage in STEM in a fun and supportive environment. Through hands-on activities, the girls are encouraged to think critically and work as a team. The club is sponsored by Reading Spots, an award-winning United Kingdom-based charity.
-															</p>
-															<h3>Describe your role and experience in GEMS</h3>
-															<div style="width:10%;height:4px;background: url(	ff-stuff/img/banner/Line.svg);background-size:cover;"></div><br>																													
-															<p>
-																	As the founder and facilitator, I recruit and train volunteers to work with these young girls, both in Sierra Leone and Ghana. It has been a bit of a challenge getting girls to fully participate and interact with each other. They are used to a system in which they do not have to think; everything is fed to them by their teachers, and all they have to do is regurgitate the information to pass examinations. Our goal is for them to be independent, while being able to work together.
-															</p>
-															<h3>What do you think is GEMS’ greatest achievement so far?</h3>
-															<div style="width:10%;height:4px;background: url(	ff-stuff/img/banner/Line.svg);background-size:cover;"></div><br>																													
-															<p>
-																	Our greatest achievement is the exposure to the vast range of possibilities in STEM that we have introduced to the girls. By working in teams, they have also become far more confident in their social skills which is key in today’s evolving world.
-															</p>
-															<img src="	ff-stuff/img/blog/b2.jpg" alt="">
-															<br><br>
-															<img src="	ff-stuff/img/blog/b3.jpg" alt="">
-															<br><br>
-															<h3>What can be improved in GEMS?</h3>
-															<div style="width:10%;height:4px;background: url(	ff-stuff/img/banner/Line.svg);background-size:cover;"></div><br>																													
-															<p>
-																We are currently working on making our system more efficient and effective. We are in the process of designing a creative STEM curriculum that is in sync with the Basic Examination Certificate Examination (BECE) syllabus, which will improve the quality of Math and Science Education in junior high schools in West Africa.
-															</p>
-															<p>
-																With this promising initiative and an inwardly fuelled drive, Melvina is on the path to becoming one of Africa’s change catalysts. She also enjoys reading novels and plays the baritone horn in an all-female marching band.
-															</p>
-															<img src="	ff-stuff/img/blog/b4.jpg" alt="">
-															<br><br><br>
-															<div style="width:100%;height:4px;background: url(	ff-stuff/img/banner/Line.svg);background-size:cover;"></div><br>																													
-														</div>
+										<article class="row blog_item">
+											<div class="col-md-12">
+												<div class="blog_post event_area">
+													<?php if($post): ?>
+													<div class="blogitem single_event">
+														<figure>
+															<?php
+			 													$id = $post['ID'];
+
+			 													$featured_image = "";
+
+
+			 													foreach ($attachments as $attachment) {
+		 															if(!stristr($post['post_content'],$attachment['guid'])){
+		 																$featured_image = $attachment['guid'];
+		 															}
+			 													}
+
+
+			 												 ?>
+
+
+			 												 <img src="<?php echo htmlspecialchars($featured_image)?>" alt="">
+														</figure>
+														<a href="#" class="blog_item_date">
+															<h3><?php echo getDay($post['post_date']) ?></h3>
+															<h4><?php echo getMonth($post['post_date']) ?></h4>
+														</a>
+													</div>
+													
+													<div class="blog_details norad">
+															<h2 style="color: #901c1d; text-transform: uppercase;"><?php echo htmlspecialchars($post['post_title']); ?></h2>
+															<div style="width:20%;height:4px;background: url(ff-stuff/img/banner/Line.svg);background-size:cover;"></div>
+															<br>
+															<div style="color: black" class="col-lg-9">
+																<?php echo $post['post_content'] ?>
+															</div>
 													</div>
 												</div>
-											</article>
+												<?php else: ?>
+													<div>
+														<h1 style="color: #ddd">No such blog post exists</h1>
+													</div>
+												<?php endif?>																			
+											</div>
+										</article>
 									</div>
-								</div> -->
+								</div>
 								<div class="col-lg-3 nomag">
 									<div class="blog_right_sidebar nopadd">
 										<aside class="single_sidebar_widget popular_post_widget wow fadeInDown" data-wow-delay="0.3s">

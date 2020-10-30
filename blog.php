@@ -204,7 +204,6 @@
 
 	 													foreach ($post_attachments as $attachment) {
  															if(!stristr($post['post_content'],$attachment['guid'])){
- 																print_r($attachment);
  																$featured_image = $attachment['guid'];
  															}
 	 													}
