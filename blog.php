@@ -29,6 +29,7 @@
 
 	function getDay($date){
 		$publish_date_with_time = explode("-",$date,3)[2];
+
 		$publish_day = explode(" ", $publish_date_with_time)[0];
 
 		return $publish_day;
@@ -60,14 +61,12 @@
 <!-- grabbing that respective attachmens of each blog post -->
 
  <?php 
- 	$id = 12;
+ 	
 
  	function getPostAttachments($arr){
  		global $id;
  		return $arr['post_parent'] == $id;
  	}
-
- 	$post_attachments = array_filter($attachments,"getPostAttachments");
 
 
  ?>
@@ -102,12 +101,7 @@
 
  <body>
 
- 	<p style="color: red">
- 		<?php 
-
- 			print_r($post_attachments);
- 		 ?>
- 	</p>
+ 
 
  	<!--================ Start Header Menu Area =================-->
  	<header class="header_area">
@@ -197,8 +191,32 @@
 	 									<div class="blog_post event_area">
 	 										<div class="blogitem single_event">
 	 											<figure>
+
+
+	 												<?php
+	 													$id = $post['ID'];
+
+
+	 													$post_attachments = array_filter($attachments,"getPostAttachments");
+
+	 													$featured_image = "";
+
+
+	 													foreach ($post_attachments as $attachment) {
+ 															if(!stristr($post['post_content'],$attachment['guid'])){
+ 																print_r($attachment);
+ 																$featured_image = $attachment['guid'];
+ 															}
+	 													}
+
+
+	 												 ?>
+
+
+
+
 	 												<!-- <img src="ff-stuff/img/banner/firenze_libri.jpg" alt=""> -->
-	 												<img src="<?php echo htmlspecialchars($post_attachments[1]['guid'])?>" alt="">
+	 												<img src="<?php echo htmlspecialchars($featured_image)?>" alt="">
 	 												featured image goes here
 	 											</figure>
 	 											<a href="#" class="blog_item_date">
